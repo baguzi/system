@@ -1,0 +1,29 @@
+#!/bin/bash
+
+
+
+
+echo " world writable 파일 점검"
+
+echo
+echo "[점검 기준]"
+echo "양호 : world writable 파일이 존재하지 않는 경우"
+echo "취약 : world writable 파일이 존재하는 경우"
+
+echo
+echo "[점검 결과]"
+
+RESULT=$(find / -type f -perm -2 -exec ls -l {} \; 2>/dev/null)
+
+if [ -z "$RESULT" ]; then
+    echo "양호"
+    echo "world writable 파일이 존재하지 않습니다."
+else
+    echo "취약"
+    echo "world writable 파일이 존재합니다."
+    echo
+    echo "[발견된 world writable 파일]"
+    echo "$RESULT"
+fi
+
+echo " 점검 완료"
