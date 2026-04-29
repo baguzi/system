@@ -1,9 +1,11 @@
 #!/bin/bash
 
+# U-25: world writable 파일 점검 스크립트
+# 점검 내용: 불필요한 world writable 파일 여부 점검
 
-
-
-echo " world writable 파일 점검"
+echo "======================================"
+echo " U-25 world writable 파일 점검"
+echo "======================================"
 
 echo
 echo "[점검 기준]"
@@ -16,14 +18,18 @@ echo "[점검 결과]"
 RESULT=$(find / -type f -perm -2 -exec ls -l {} \; 2>/dev/null)
 
 if [ -z "$RESULT" ]; then
-    echo "양호"
     echo "world writable 파일이 존재하지 않습니다."
-else
-    echo "취약"
-    echo "world writable 파일이 존재합니다."
     echo
+    echo "최종 결과 : 양호"
+else
     echo "[발견된 world writable 파일]"
     echo "$RESULT"
+    echo
+    echo "world writable 파일이 존재합니다."
+    echo "최종 결과 : 취약"
 fi
 
+echo
+echo "======================================"
 echo " 점검 완료"
+echo "======================================"
